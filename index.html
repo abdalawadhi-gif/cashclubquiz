@@ -1369,7 +1369,7 @@ const COLORS = {
   purple: '#7B2D8B'
 };
 
-const toAr = n => n.toString().replace(/\d/g,'d'=>'٠١٢٣٤٥٦٧٨٩'[d]);
+function toAr(n) { return n.toString().replace(/\d/g, function(d){ return '٠١٢٣٤٥٦٧٨٩'[d]; }); }
 
 /* ═══════════════════════════════════
    BACKGROUND BUBBLES
@@ -1458,15 +1458,11 @@ function selectOption(el, qNum) {
 function nextQuestion(current) {
   if(!answers[current]) return;
   const cur = document.getElementById('q'+current);
-
-  cur.classList.add('exit');
-  setTimeout(()=>{
-    cur.classList.remove('active','exit');
-    const next = document.getElementById('q'+(current+1));
-    next.classList.add('active');
-    updateProgress(current+1);
-    window.scrollTo({top:0,behavior:'smooth'});
-  }, 280);
+  cur.classList.remove('active');
+  const next = document.getElementById('q'+(current+1));
+  next.classList.add('active');
+  updateProgress(current+1);
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function updateProgress(qNum) {
@@ -1698,8 +1694,7 @@ function showResult() {
 ═══════════════════════════════════ */
 function restartQuiz() {
   Object.keys(answers).forEach(k=>delete answers[k]);
-  document.querySelectorAll('.question-card').forEach(c=>c.classList.remove('active','exit'));
-  document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+  document.querySelectorAll('.question-card').forEach(c=>c.classList.remove('active','exit'));  document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('ready'));
   document.getElementById('resultCard').classList.remove('active');
   document.getElementById('q1').classList.add('active');
