@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار الصحة المالية — Cash Clinic</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   CASH CLINIC BRAND TOKENS
+═══════════════════════════════════════ */
+:root {
+  --gold:    #E8C011;
+  --gold2:   #F0C845;
+  --orange:  #F5A623;
+  --blue:    #2F7EC7;
+  --blue2:   #3D8ED4;
+  --purple:  #7B2D8B;
+  --purple2: #9B3DAB;
+  --white:   #FFFFFF;
+  --off:     #F8F7FF;
+  --dark:    #120B1E;
+  --text:    #1A1035;
+  --muted:   #6B5F8A;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--off);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════
+   FLOATING BUBBLES BACKGROUND
+═══════════════════════════════════════ */
+.bubbles-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.07;
+  animation: floatBubble linear infinite;
+}
+
+@keyframes floatBubble {
+  0%   { transform: translateY(110vh) scale(0.8) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.07; }
+  90%  { opacity: 0.07; }
+  100% { transform: translateY(-20vh) scale(1.2) rotate(360deg); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero {
+  position: relative;
+  z-index: 1;
+  background: var(--dark);
+  overflow: hidden;
+  padding: 0 0 0 0;
+}
+
+/* Animated coin grid behind hero */
+.hero-coins {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hcoin {
+  position: absolute;
+  border-radius: 50%;
+  animation: coinFloat ease-in-out infinite;
+}
+
+@keyframes coinFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-18px) rotate(180deg); }
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  padding: 56px 24px 64px;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Logo dots cluster */
+.logo-cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 32px;
+}
+
+.logo-dot {
+  border-radius: 50%;
+  animation: logoPulse ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.15); }
+}
+
+.logo-coin {
+  width: 36px; height: 36px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--dark);
+  box-shadow: 0 0 0 3px rgba(232,192,17,0.3);
+  animation: coinSpin 3s ease-in-out infinite;
+}
+
+@keyframes coinSpin {
+  0%, 100% { transform: scale(1) rotateY(0deg); box-shadow: 0 0 0 3px rgba(232,192,17,0.3); }
+  50%       { transform: scale(1.1) rotateY(180deg); box-shadow: 0 0 20px rgba(232,192,17,0.6); }
+}
+
+.brand-name {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 24px;
+}
+
+.brand-name span { color: var(--gold); }
+
+.hero h1 {
+  font-size: clamp(30px, 7vw, 58px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  animation: heroReveal 0.8s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero h1 .word-gold  { color: var(--gold); }
+.hero h1 .word-blue  { color: #5BB8FF; }
+.hero h1 .word-orange{ color: var(--orange); }
+
+.hero-sub {
+  color: rgba(255,255,255,0.65);
+  font-size: clamp(15px, 3vw, 18px);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto 36px;
+  animation: heroReveal 0.8s 0.15s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+.hero-pills {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  animation: heroReveal 0.8s 0.3s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px);
+}
+
+.pill-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+
+/* Hero wave bottom */
+.hero-wave {
+  position: relative;
+  z-index: 2;
+  line-height: 0;
+}
+
+.hero-wave svg { display: block; width: 100%; }
+
+/* ═══════════════════════════════════════
+   STICKY PROGRESS
+═══════════════════════════════════════ */
+.progress-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(248,247,255,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid rgba(47,126,199,0.12);
+  padding: 14px 24px;
+  display: none;
+  transform: translateY(-100%);
+  transition: transform 0.4s ease;
+}
+
+.progress-wrap.visible {
+  display: block;
+  transform: translateY(0);
+}
+
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.progress-step-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.step-dot {
+  width: 28px; height: 6px;
+  border-radius: 10px;
+  background: #E0D8FF;
+  transition: all 0.4s ease;
+}
+
+.step-dot.done { background: var(--blue); }
+.step-dot.active {
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  width: 40px;
+  box-shadow: 0 0 8px rgba(47,126,199,0.5);
+}
+
+.progress-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.progress-bar-bg {
+  height: 4px;
+  background: #E0D8FF;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--gold));
+  background-size: 200% 100%;
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ═══════════════════════════════════════
+   QUIZ CONTAINER
+═══════════════════════════════════════ */
+.quiz-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+/* ═══════════════════════════════════════
+   QUESTION CARD
+═══════════════════════════════════════ */
+.question-card {
+  display: none;
+}
+
+.question-card.active {
+  display: block;
+  animation: cardIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+.question-card.exit {
+  animation: cardOut 0.3s ease both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateX(60px) scale(0.96); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes cardOut {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-60px); }
+}
+
+.q-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.q-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; height: 44px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 900;
+  color: #fff;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.q-badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.2);
+  border-radius: 14px;
+  animation: badgeShine 2s ease infinite;
+}
+
+@keyframes badgeShine {
+  0%, 100% { transform: translateX(-100%) skewX(-20deg); }
+  50%       { transform: translateX(200%) skewX(-20deg); }
+}
+
+.q-meta {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.q-text {
+  font-size: clamp(18px, 4vw, 24px);
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--dark);
+  margin-bottom: 28px;
+  padding: 0 4px;
+}
+
+/* ═══════════════════════════════════════
+   OPTIONS
+═══════════════════════════════════════ */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  border: 2px solid #E8E2F8;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  overflow: hidden;
+  animation: optionReveal 0.4s ease both;
+}
+
+.option:nth-child(1) { animation-delay: 0.05s; }
+.option:nth-child(2) { animation-delay: 0.12s; }
+.option:nth-child(3) { animation-delay: 0.19s; }
+.option:nth-child(4) { animation-delay: 0.26s; }
+
+@keyframes optionReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.option::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.25s;
+  border-radius: 16px;
+}
+
+/* Ripple on click */
+.option .ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: rippleAnim 0.5s ease;
+  pointer-events: none;
+}
+
+@keyframes rippleAnim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+.option:hover {
+  transform: translateX(-5px) scale(1.01);
+  box-shadow: 0 8px 30px rgba(47,126,199,0.15);
+  border-color: rgba(47,126,199,0.35);
+}
+
+.option.selected {
+  transform: translateX(-5px) scale(1.02);
+  box-shadow: 0 10px 36px rgba(47,126,199,0.25);
+}
+
+.option.selected::before { opacity: 1; }
+
+/* Color variants per question */
+.q-blue .option.selected  { border-color: var(--blue);   background: rgba(47,126,199,0.06); }
+.q-blue .option.selected::before { background: linear-gradient(135deg, rgba(47,126,199,0.08), rgba(47,126,199,0.02)); }
+
+.q-purple .option.selected { border-color: var(--purple); background: rgba(123,45,139,0.06); }
+.q-purple .option.selected::before { background: linear-gradient(135deg, rgba(123,45,139,0.08), rgba(123,45,139,0.02)); }
+
+.q-orange .option.selected { border-color: var(--orange); background: rgba(245,166,35,0.06); }
+.q-orange .option.selected::before { background: linear-gradient(135deg, rgba(245,166,35,0.08), rgba(245,166,35,0.02)); }
+
+.q-gold .option.selected   { border-color: var(--gold);   background: rgba(232,192,17,0.06); }
+.q-gold .option.selected::before { background: linear-gradient(135deg, rgba(232,192,17,0.08), rgba(232,192,17,0.02)); }
+
+/* Radio indicator */
+.opt-radio {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 2.5px solid #D8D0EE;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+}
+
+.option.selected .opt-radio {
+  transform: scale(1.1);
+}
+
+.q-blue   .option.selected .opt-radio { border-color: var(--blue);   background: var(--blue); }
+.q-purple .option.selected .opt-radio { border-color: var(--purple); background: var(--purple); }
+.q-orange .option.selected .opt-radio { border-color: var(--orange); background: var(--orange); }
+.q-gold   .option.selected .opt-radio { border-color: var(--gold);   background: var(--gold); }
+
+.opt-radio-inner {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #fff;
+  transform: scale(0);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.option.selected .opt-radio-inner { transform: scale(1); }
+
+/* Option letter badge */
+.opt-letter {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  background: var(--off);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--muted);
+  transition: all 0.25s;
+  flex-shrink: 0;
+}
+
+.option.selected .opt-letter {
+  color: #fff;
+}
+
+.q-blue   .option.selected .opt-letter { background: var(--blue); }
+.q-purple .option.selected .opt-letter { background: var(--purple); }
+.q-orange .option.selected .opt-letter { background: var(--orange); }
+.q-gold   .option.selected .opt-letter { background: var(--gold); color: var(--dark); }
+
+.opt-text {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text);
+  font-weight: 500;
+  padding-left: 36px;
+  flex: 1;
+  transition: color 0.25s;
+}
+
+.option.selected .opt-text { font-weight: 700; }
+
+/* ═══════════════════════════════════════
+   NEXT BUTTON
+═══════════════════════════════════════ */
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 24px;
+  padding: 18px 32px;
+  border: none;
+  border-radius: 16px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.25s ease;
+}
+
+.nav-btn.ready {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.nav-btn:hover {
+  transform: translateY(-3px);
+}
+
+.nav-btn:active { transform: translateY(0) scale(0.98); }
+
+.nav-btn .btn-shine {
+  position: absolute;
+  top: 0; right: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: skewX(-20deg);
+  transition: right 0.5s ease;
+}
+
+.nav-btn:hover .btn-shine { right: 130%; }
+
+.btn-arrow {
+  font-size: 20px;
+  transition: transform 0.3s;
+}
+
+.nav-btn:hover .btn-arrow { transform: translateX(-6px); }
+
+/* Question color themes */
+.q-blue   .nav-btn { background: linear-gradient(135deg, var(--blue), #1A5FA0);   box-shadow: 0 8px 28px rgba(47,126,199,0.4); }
+.q-purple .nav-btn { background: linear-gradient(135deg, var(--purple), #5A1F6A); box-shadow: 0 8px 28px rgba(123,45,139,0.4); }
+.q-orange .nav-btn { background: linear-gradient(135deg, var(--orange), #C07800); box-shadow: 0 8px 28px rgba(245,166,35,0.4); }
+.q-gold   .nav-btn { background: linear-gradient(135deg, var(--gold), #B89000);   box-shadow: 0 8px 28px rgba(232,192,17,0.35); color: var(--dark); }
+
+/* ═══════════════════════════════════════
+   RESULT PAGE
+═══════════════════════════════════════ */
+.result-card { display: none; }
+.result-card.active {
+  display: block;
+  animation: cardIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+/* Result hero */
+.result-hero {
+  border-radius: 24px;
+  padding: 48px 32px 40px;
+  text-align: center;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+/* Animated coin rain inside result */
+.result-coins {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.rcoin {
+  position: absolute;
+  border-radius: 50%;
+  animation: rainCoin ease-in-out infinite;
+  opacity: 0.15;
+}
+
+@keyframes rainCoin {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+  20%  { opacity: 0.15; }
+  80%  { opacity: 0.15; }
+  100% { transform: translateY(350px) rotate(720deg); opacity: 0; }
+}
+
+.result-icon-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.result-icon {
+  font-size: 64px;
+  display: block;
+  animation: iconBounce 1s cubic-bezier(0.34,1.56,0.64,1) 0.3s both;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes iconBounce {
+  from { transform: scale(0) rotate(-30deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg);  opacity: 1; }
+}
+
+.icon-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.15);
+  animation: ringPulse 2s ease infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1);   opacity: 0.5; }
+  50%       { transform: scale(1.2); opacity: 0; }
+}
+
+.result-type-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 100px;
+  margin-bottom: 14px;
+  animation: heroReveal 0.5s 0.5s both;
+}
+
+.result-title {
+  font-size: clamp(26px, 6vw, 42px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  animation: heroReveal 0.5s 0.6s both;
+}
+
+.result-desc {
+  color: rgba(255,255,255,0.7);
+  font-size: 15px;
+  line-height: 1.75;
+  max-width: 500px;
+  margin: 0 auto 28px;
+  animation: heroReveal 0.5s 0.7s both;
+}
+
+/* Score ring */
+.score-ring-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 8px;
+  animation: heroReveal 0.5s 0.8s both;
+}
+
+.score-ring-svg {
+  width: 80px; height: 80px;
+  transform: rotate(-90deg);
+}
+
+.score-ring-bg { fill: none; stroke: rgba(255,255,255,0.12); stroke-width: 8; }
+
+.score-ring-fill {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1) 1s;
+}
+
+.score-ring-text {
+  text-align: right;
+}
+
+.score-number {
+  font-size: 36px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+
+.score-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════
+   INSIGHTS CARD
+═══════════════════════════════════════ */
+.insights-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px;
+  margin-bottom: 16px;
+  border: 2px solid rgba(47,126,199,0.08);
+  box-shadow: 0 4px 32px rgba(47,126,199,0.06);
+}
+
+.card-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(123,45,139,0.3), transparent);
+}
+
+.insight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(47,126,199,0.07);
+  animation: insightReveal 0.4s ease both;
+}
+
+.insight-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+@keyframes insightReveal {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.insight-item:nth-child(1) { animation-delay: 0.9s; }
+.insight-item:nth-child(2) { animation-delay: 1.0s; }
+.insight-item:nth-child(3) { animation-delay: 1.1s; }
+.insight-item:nth-child(4) { animation-delay: 1.2s; }
+
+.insight-bullet {
+  width: 32px; height: 32px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.insight-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════
+   CTA CARD
+═══════════════════════════════════════ */
+.cta-card {
+  border-radius: 24px;
+  padding: 40px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+/* Orbiting circles */
+.cta-orb {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.12;
+  animation: orbMove ease-in-out infinite alternate;
+}
+
+@keyframes orbMove {
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(20px, -20px) scale(1.1); }
+}
+
+.cta-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 6px 18px;
+  border-radius: 100px;
+  margin-bottom: 18px;
+  background: rgba(232,192,17,0.15);
+  border: 1px solid rgba(232,192,17,0.35);
+  color: var(--gold2);
+  position: relative; z-index: 1;
+}
+
+.cta-headline {
+  font-size: clamp(20px, 4.5vw, 30px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  position: relative; z-index: 1;
+}
+
+.cta-sub {
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+  line-height: 1.65;
+  margin-bottom: 28px;
+  position: relative; z-index: 1;
+}
+
+/* Feature grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 28px;
+  position: relative; z-index: 1;
+}
+
+.feat-item {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 16px 14px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.feat-item:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-3px);
+}
+
+.feat-icon { font-size: 22px; margin-bottom: 6px; }
+
+.feat-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Pricing */
+.pricing-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  position: relative; z-index: 1;
+}
+
+.price-main {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--gold2);
+  animation: pricePop 0.6s cubic-bezier(0.34,1.56,0.64,1) 1.5s both;
+}
+
+@keyframes pricePop {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.price-orig {
+  font-size: 18px;
+  color: rgba(255,255,255,0.3);
+  text-decoration: line-through;
+}
+
+.price-save {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: rgba(232,192,17,0.2);
+  border: 1px solid rgba(232,192,17,0.4);
+  color: var(--gold2);
+}
+
+/* CTA Button */
+.cta-btn {
+  display: block;
+  width: 100%;
+  padding: 20px 32px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  color: var(--dark);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(232,192,17,0.4);
+  transition: all 0.3s ease;
+  z-index: 1;
+  text-decoration: none;
+}
+
+.cta-btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 16px 50px rgba(232,192,17,0.55);
+}
+
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: translateX(-100%) skewX(-20deg);
+  animation: btnShine 2.5s ease 2s infinite;
+}
+
+@keyframes btnShine {
+  to { transform: translateX(200%) skewX(-20deg); }
+}
+
+.cta-deadline {
+  margin-top: 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  position: relative; z-index: 1;
+}
+
+.cta-deadline strong { color: var(--gold2); }
+
+/* ═══════════════════════════════════════
+   RESTART
+═══════════════════════════════════════ */
+.restart-btn {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 15px;
+  background: transparent;
+  border: 2px solid rgba(123,45,139,0.2);
+  border-radius: 14px;
+  color: var(--muted);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s;
+  letter-spacing: 0.5px;
+}
+
+.restart-btn:hover {
+  border-color: var(--purple);
+  color: var(--purple);
+  background: rgba(123,45,139,0.04);
+}
+
+/* ═══════════════════════════════════════
+   CONFETTI BURST
+═══════════════════════════════════════ */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  width: 10px; height: 10px;
+  border-radius: 2px;
+  animation: confettiFall ease-in forwards;
+}
+
+@keyframes confettiFall {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE
+═══════════════════════════════════════ */
+@media (max-width: 500px) {
+  .result-hero, .cta-card { padding: 32px 20px; }
+  .insights-card { padding: 24px 18px; }
+  .features-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .score-ring-wrap { flex-direction: column; gap: 10px; }
+  .score-ring-text { text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Floating background bubbles -->
+<div class="bubbles-bg" id="bubblesBg"></div>
+
+<!-- Confetti container -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-coins" id="heroCoins"></div>
+  <div class="hero-inner">
+
+    <!-- Logo cluster -->
+    <div class="logo-cluster">
+      <div class="logo-dot" style="width:10px;height:10px;background:var(--purple);animation-delay:0s;animation-duration:2.1s;"></div>
+      <div class="logo-dot" style="width:16px;height:16px;background:var(--blue);animation-delay:0.3s;animation-duration:2.4s;"></div>
+      <div class="logo-coin">$</div>
+      <div class="logo-dot" style="width:14px;height:14px;background:var(--orange);animation-delay:0.6s;animation-duration:2.2s;"></div>
+      <div class="logo-dot" style="width:9px;height:9px;background:var(--gold);animation-delay:0.9s;animation-duration:2.0s;"></div>
+    </div>
+
+    <div class="brand-name">CASH <span>CLINIC</span></div>
+
+    <h1>
+      ما هو وضعك<br>
+      <span class="word-gold">المالي</span>
+      <span class="word-blue"> الحقيقي؟</span>
+    </h1>
+
+    <p class="hero-sub">
+      ٥ أسئلة فقط تكشف لك مناطق النزيف في حياتك المالية<br>وتوجهك نحو الوفرة الحقيقية
+    </p>
+
+    <div class="hero-pills">
+      <div class="pill"><div class="pill-dot" style="background:var(--gold)"></div>٥ أسئلة فقط</div>
+      <div class="pill"><div class="pill-dot" style="background:var(--blue)"></div>نتيجة فورية</div>
+      <div class="pill"><div class="pill-dot" style="background:var(--purple)"></div>مجاني ١٠٠٪</div>
+    </div>
+
+  </div>
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,0 C360,60 1080,60 1440,0 L1440,60 L0,60 Z" fill="#F8F7FF"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ═══ STICKY PROGRESS ═══ -->
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-top">
+    <div class="progress-step-dots" id="stepDots"></div>
+    <div class="progress-label" id="progressLabel">السؤال ١ من ٥</div>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div class="quiz-wrap">
+
+  <!-- Q1 — BLUE theme -->
+  <div class="question-card q-blue active" id="q1">
+    <div class="q-header">
+      <div class="q-badge" style="background:linear-gradient(135deg,var(--blue),#1A5FA0)">١</div>
+      <div class="q-meta">التشخيص المالي</div>
+    </div>
+    <div class="q-text">لو تنظر لراتبك وحساباتك الحين، كيف تصف وضعك المالي؟</div>
+    <div class="options">
+      <div class="option" onclick="selectOption(this,1)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">أ</div>
+        <div class="opt-text">راتبي عالي بس ما أعرف وين تروح الفلوس — في نهاية الشهر ما يتبقى شي</div>
+      </div>
+      <div class="option" onclick="selectOption(this,1)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">ب</div>
+        <div class="opt-text">عندي أقساط والتزامات كثيرة، وأحس إن الدخل ما يكفي بس بشكل أو بآخر أعيش</div>
+      </div>
+      <div class="option" onclick="selectOption(this,1)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">ج</div>
+        <div class="opt-text">وضعي مقبول، عندي بعض الادخار، بس حاسس إن ما فيه نمو حقيقي</div>
+      </div>
+      <div class="option" onclick="selectOption(this,1)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">د</div>
+        <div class="opt-text">عندي أصول ومدخرات لكن ما عندي خطة واضحة وأحياناً أتصرف بشكل عشوائي</div>
+      </div>
+    </div>
+    <button class="nav-btn" id="btn1" onclick="nextQuestion(1)">
+      السؤال التالي <span class="btn-arrow">←</span>
+      <span class="btn-shine"></span>
+    </button>
+  </div>
+
+  <!-- Q2 — PURPLE theme -->
+  <div class="question-card q-purple" id="q2">
+    <div class="q-header">
+      <div class="q-badge" style="background:linear-gradient(135deg,var(--purple),#5A1F6A)">٢</div>
+      <div class="q-meta">النزيف العاطفي والاجتماعي</div>
+    </div>
+    <div class="q-text">متى آخر مرة "نزف" مالك بسبب موقف اجتماعي أو عاطفي — مو لأنك احتجت الشي؟</div>
+    <div class="options">
+      <div class="option" onclick="selectOption(this,2)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">أ</div>
+        <div class="opt-text">هذا الشهر — أصرف على الناس أو على نفسي عشان أحس براحة نفسية أو ما أبين بخيل</div>
+      </div>
+      <div class="option" onclick="selectOption(this,2)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">ب</div>
+        <div class="opt-text">أحياناً، خصوصاً في المناسبات أو لما أقارن نفسي بالثانيين</div>
+      </div>
+      <div class="option" onclick="selectOption(this,2)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">ج</div>
+        <div class="opt-text">نادراً، أعرف متى أقول لا لكن الموضوع يسبب لي توتر</div>
+      </div>
+      <div class="option" onclick="selectOption(this,2)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">د</div>
+        <div class="opt-text">عندي حدود واضحة، لكن أحس إن فيه نزيف من مكان ثاني ما اكتشفته</div>
+      </div>
+    </div>
+    <button class="nav-btn" id="btn2" onclick="nextQuestion(2)">
+      السؤال التالي <span class="btn-arrow">←</span>
+      <span class="btn-shine"></span>
+    </button>
+  </div>
+
+  <!-- Q3 — ORANGE theme -->
+  <div class="question-card q-orange" id="q3">
+    <div class="q-header">
+      <div class="q-badge" style="background:linear-gradient(135deg,var(--orange),#C07800)">٣</div>
+      <div class="q-meta">الأمان المالي</div>
+    </div>
+    <div class="q-text">لو وقف دخلك اليوم — كم شهر تقدر تعيش بنفس مستوى حياتك بدون ضغط؟</div>
+    <div class="options">
+      <div class="option" onclick="selectOption(this,3)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">أ</div>
+        <div class="opt-text">أقل من شهر — ما عندي احتياطي فعلي</div>
+      </div>
+      <div class="option" onclick="selectOption(this,3)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">ب</div>
+        <div class="opt-text">شهر إلى ثلاثة — عندي شيء بسيط</div>
+      </div>
+      <div class="option" onclick="selectOption(this,3)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">ج</div>
+        <div class="opt-text">٣ إلى ٦ أشهر — فيه بعض الأمان</div>
+      </div>
+      <div class="option" onclick="selectOption(this,3)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">د</div>
+        <div class="opt-text">أكثر من ٦ أشهر — لكن ما فيه نمو، الفلوس واقفة</div>
+      </div>
+    </div>
+    <button class="nav-btn" id="btn3" onclick="nextQuestion(3)">
+      السؤال التالي <span class="btn-arrow">←</span>
+      <span class="btn-shine"></span>
+    </button>
+  </div>
+
+  <!-- Q4 — GOLD theme -->
+  <div class="question-card q-gold" id="q4">
+    <div class="q-header">
+      <div class="q-badge" style="background:linear-gradient(135deg,var(--gold),#B89000);color:var(--dark)">٤</div>
+      <div class="q-meta">الوعي الاستثماري</div>
+    </div>
+    <div class="q-text">لما تفكر في الاستثمار أو بناء أصول، أي جملة تصف تفكيرك أكثر؟</div>
+    <div class="options">
+      <div class="option" onclick="selectOption(this,4)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">أ</div>
+        <div class="opt-text">ما عندي فلوس أستثمرها — الراتب ما يكفي أصلاً</div>
+      </div>
+      <div class="option" onclick="selectOption(this,4)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">ب</div>
+        <div class="opt-text">جربت أشياء ولكن خسرت أو ما شفت نتيجة واضحة</div>
+      </div>
+      <div class="option" onclick="selectOption(this,4)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">ج</div>
+        <div class="opt-text">أبي أستثمر لكن ما أعرف من أين أبدأ وما عندي خطة واضحة</div>
+      </div>
+      <div class="option" onclick="selectOption(this,4)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">د</div>
+        <div class="opt-text">عندي استثمارات لكنها عشوائية، ما فيه نظام أو هوية استثمارية واضحة</div>
+      </div>
+    </div>
+    <button class="nav-btn" id="btn4" onclick="nextQuestion(4)">
+      السؤال التالي <span class="btn-arrow">←</span>
+      <span class="btn-shine"></span>
+    </button>
+  </div>
+
+  <!-- Q5 — BLUE theme -->
+  <div class="question-card q-blue" id="q5">
+    <div class="q-header">
+      <div class="q-badge" style="background:linear-gradient(135deg,var(--blue),var(--purple))">٥</div>
+      <div class="q-meta">هدفك المالي</div>
+    </div>
+    <div class="q-text">ما هو الهدف المالي الأهم بالنسبة لك في هذه المرحلة؟</div>
+    <div class="options">
+      <div class="option" onclick="selectOption(this,5)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">أ</div>
+        <div class="opt-text">أوقف النزيف وأفهم وين تروح فلوسي</div>
+      </div>
+      <div class="option" onclick="selectOption(this,5)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">ب</div>
+        <div class="opt-text">أبني نظام مالي واضح يحميني حتى لو تعبت ظروفي</div>
+      </div>
+      <div class="option" onclick="selectOption(this,5)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">ج</div>
+        <div class="opt-text">أبني أصول حقيقية وأحقق دخل إضافي ما يعتمد على راتبي</div>
+      </div>
+      <div class="option" onclick="selectOption(this,5)">
+        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+        <div class="opt-letter">د</div>
+        <div class="opt-text">أحقق راحة مالية — أتخذ قرارات بدون خوف وعندي مساحة نفسية</div>
+      </div>
+    </div>
+    <button class="nav-btn" id="btn5" onclick="showResult()">
+      أعطني نتيجتي ✨ <span class="btn-arrow"></span>
+      <span class="btn-shine"></span>
+    </button>
+  </div>
+
+  <!-- ═══ RESULT ═══ -->
+  <div class="result-card" id="resultCard">
+
+    <div class="result-hero">
+      <div class="result-coins" id="resultCoins"></div>
+
+      <div class="result-icon-wrap">
+        <div class="result-icon" id="resultIcon">💸</div>
+        <div class="icon-ring"></div>
+      </div>
+
+      <div class="result-type-tag" id="resultTag">نتيجة تشخيصك المالي</div>
+      <div class="result-title" id="resultTitle">الوفرة الوهمية</div>
+      <div class="result-desc" id="resultDesc"></div>
+
+      <div class="score-ring-wrap">
+        <svg class="score-ring-svg" viewBox="0 0 80 80">
+          <circle class="score-ring-bg" cx="40" cy="40" r="35"/>
+          <circle class="score-ring-fill" id="scoreRing" cx="40" cy="40" r="35"/>
+        </svg>
+        <div class="score-ring-text">
+          <div class="score-number" id="scoreNum">٠٪</div>
+          <div class="score-label">مستوى الوعي المالي</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insights-card">
+      <div class="card-label">ما كشفه اختبارك</div>
+      <div id="insightsList"></div>
+    </div>
+
+    <div class="cta-card">
+      <div class="cta-orb" style="width:200px;height:200px;background:var(--blue);top:-60px;left:-60px;animation-duration:4s;"></div>
+      <div class="cta-orb" style="width:150px;height:150px;background:var(--purple);bottom:-40px;right:-40px;animation-duration:5s;animation-delay:1s;"></div>
+      <div class="cta-orb" style="width:80px;height:80px;background:var(--gold);top:40%;right:10%;animation-duration:3s;animation-delay:0.5s;"></div>
+
+      <div class="cta-tag">✦ ورشة Cash Clinic</div>
+      <div class="cta-headline" id="ctaHeadline">خطتك للوفرة تبدأ هنا</div>
+      <div class="cta-sub" id="ctaSub">٣ أيام مع غالية النويف وسارة الهندي — تشخيص + نظام + تنفيذ</div>
+
+      <div class="features-grid">
+        <div class="feat-item">
+          <div class="feat-icon">🧮</div>
+          <div class="feat-text">تشخيص مالي بالأرقام</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">💡</div>
+          <div class="feat-text">كشف النزيف المالي</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🗺️</div>
+          <div class="feat-text">خارطة وفرة شخصية</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">📈</div>
+          <div class="feat-text">نظام استثمار مناسب لك</div>
+        </div>
+      </div>
+
+      <div class="pricing-row">
+        <div class="price-main">٢٥٠ كد</div>
+        <div class="price-orig">٣٠٠ كد</div>
+        <div class="price-save">وفر ٥٠ كد</div>
+      </div>
+
+      <button class="cta-btn" onclick="handleCTA()">
+        احجز مقعدك الآن ✦
+      </button>
+      <div class="cta-deadline">
+        ينتهي التسجيل المبكر <strong>٢٠ مايو</strong> — الورشة من ٣٠ مايو إلى ١ يونيو
+      </div>
+    </div>
+
+    <button class="restart-btn" onclick="restartQuiz()">↺ أعد الاختبار من البداية</button>
+
+  </div>
+
+</div><!-- end quiz-wrap -->
+
+<script>
+/* ═══════════════════════════════════
+   BRAND COLORS
+═══════════════════════════════════ */
+const COLORS = {
+  gold:   '#E8C011',
+  orange: '#F5A623',
+  blue:   '#2F7EC7',
+  purple: '#7B2D8B'
+};
+
+const toAr = n => n.toString().replace(/\d/g,'d'=>'٠١٢٣٤٥٦٧٨٩'[d]);
+
+/* ═══════════════════════════════════
+   BACKGROUND BUBBLES
+═══════════════════════════════════ */
+(function spawnBubbles(){
+  const bg = document.getElementById('bubblesBg');
+  const palette = [COLORS.gold, COLORS.orange, COLORS.blue, COLORS.purple];
+  for(let i=0;i<18;i++){
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = 30 + Math.random()*90;
+    b.style.cssText = `
+      width:${size}px;height:${size}px;
+      background:${palette[i%4]};
+      left:${Math.random()*100}%;
+      animation-duration:${12+Math.random()*18}s;
+      animation-delay:${Math.random()*15}s;
+    `;
+    bg.appendChild(b);
+  }
+})();
+
+/* ═══════════════════════════════════
+   HERO ANIMATED COINS
+═══════════════════════════════════ */
+(function spawnHeroCoins(){
+  const container = document.getElementById('heroCoins');
+  const configs = [
+    {size:80, color:COLORS.blue,   top:'15%', left:'5%',  dur:'3.2s', delay:'0s'},
+    {size:50, color:COLORS.purple, top:'10%', left:'85%', dur:'2.8s', delay:'0.5s'},
+    {size:60, color:COLORS.orange, top:'60%', left:'88%', dur:'3.5s', delay:'1s'},
+    {size:40, color:COLORS.gold,   top:'70%', left:'2%',  dur:'2.5s', delay:'1.5s'},
+    {size:30, color:COLORS.blue,   top:'40%', left:'92%', dur:'4s',   delay:'0.8s'},
+    {size:25, color:COLORS.purple, top:'80%', left:'75%', dur:'3s',   delay:'2s'},
+    {size:45, color:COLORS.orange, top:'25%', left:'1%',  dur:'2.7s', delay:'0.3s'},
+  ];
+  configs.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'hcoin';
+    el.style.cssText = `
+      width:${c.size}px;height:${c.size}px;
+      background:${c.color};
+      top:${c.top};left:${c.left};
+      opacity:0.1;
+      animation-duration:${c.dur};
+      animation-delay:${c.delay};
+    `;
+    container.appendChild(el);
+  });
+})();
+
+/* ═══════════════════════════════════
+   PROGRESS STEP DOTS INIT
+═══════════════════════════════════ */
+(function initDots(){
+  const wrap = document.getElementById('stepDots');
+  for(let i=1;i<=5;i++){
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i===1?' active':'');
+    d.id = 'dot'+i;
+    wrap.appendChild(d);
+  }
+})();
+
+/* ═══════════════════════════════════
+   QUIZ STATE
+═══════════════════════════════════ */
+const answers = {};
+
+function selectOption(el, qNum) {
+  // Ripple effect
+  const ripple = document.createElement('div');
+  ripple.className = 'ripple';
+  ripple.style.cssText = `width:200px;height:200px;top:50%;left:50%;margin:-100px;background:rgba(255,255,255,0.15);`;
+  el.appendChild(ripple);
+  setTimeout(()=>ripple.remove(), 500);
+
+  el.closest('.options').querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[qNum] = el.querySelector('.opt-text').textContent.trim();
+
+  const btn = document.getElementById('btn'+qNum);
+  btn.classList.add('ready');
+}
+
+function nextQuestion(current) {
+  if(!answers[current]) return;
+  const cur = document.getElementById('q'+current);
+
+  cur.classList.add('exit');
+  setTimeout(()=>{
+    cur.classList.remove('active','exit');
+    const next = document.getElementById('q'+(current+1));
+    next.classList.add('active');
+    updateProgress(current+1);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }, 280);
+}
+
+function updateProgress(qNum) {
+  const pct = Math.round((qNum/5)*100);
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressLabel').textContent = 'السؤال '+toAr(qNum)+' من ٥';
+  const wrap = document.getElementById('progressWrap');
+  wrap.style.display = 'block';
+  setTimeout(()=>wrap.classList.add('visible'),10);
+
+  for(let i=1;i<=5;i++){
+    const dot = document.getElementById('dot'+i);
+    dot.className = 'step-dot' + (i<qNum?' done':i===qNum?' active':'');
+  }
+}
+
+/* ═══════════════════════════════════
+   PROFILES DATA
+═══════════════════════════════════ */
+const profiles = {
+  wealthy_illusion: {
+    icon:'💸',
+    color: COLORS.orange,
+    tagBg: 'rgba(245,166,35,0.18)',
+    tagColor: '#F5A623',
+    ringStroke: COLORS.orange,
+    title:'الوفرة الوهمية',
+    desc:'دخلك عالٍ لكن الوفرة الحقيقية غائبة — الفلوس تأتي وتذهب بدون أثر. هذا ليس مشكلة دخل، هي مشكلة نظام وهوية مالية.',
+    insights:[
+      {icon:'🔥', bg:'rgba(245,166,35,0.12)', text:'نزيف مالي خفي يلتهم دخلك قبل ما تشوفه — من الصرف العاطفي والالتزامات الاجتماعية'},
+      {icon:'📋', bg:'rgba(47,126,199,0.1)',  text:'ما عندك "قائمة مركز مالي" واضحة — صورة ضبابية عن أصولك والتزاماتك الحقيقية'},
+      {icon:'💡', bg:'rgba(123,45,139,0.1)',  text:'الفرق بين زيادة الدخل وامتلاك الوفرة — أنت تعيش الأول بدون الثاني'},
+      {icon:'🏗️', bg:'rgba(232,192,17,0.1)', text:'تحتاج نظام مالي يشتغل حتى لو نفسيتك تعبانة أو ظروفك تغيرت'}
+    ],
+    cta:'وضعك يحتاج صدمة محاسبية حقيقية',
+    ctaSub:'في اليوم الأول ستحسب نزيفك المالي السنوي — الرقم سيصدمك ويغير تفكيرك كلياً'
+  },
+  debt_loop: {
+    icon:'🔄',
+    color: COLORS.purple,
+    tagBg: 'rgba(123,45,139,0.18)',
+    tagColor: '#9B3DAB',
+    ringStroke: COLORS.purple,
+    title:'دوامة الالتزامات',
+    desc:'محاصر بين الأقساط والالتزامات — تدور في دائرة بدون خروج حقيقي. الخبر الجيد: هذه الدائرة لها باب، وأنت تستطيع تفتحه.',
+    insights:[
+      {icon:'⛓️', bg:'rgba(123,45,139,0.1)', text:'الديون الاستهالكية تسرق ثروتك المستقبلية — كل قسط تسدده يُقلص مساحة بناء أصولك'},
+      {icon:'🧩', bg:'rgba(47,126,199,0.1)',  text:'تخلط بين "الحل المؤقت" و"الحل الحقيقي" — مصادر الدخل الجديدة بدون نظام لن تحل المشكلة'},
+      {icon:'⚖️', bg:'rgba(232,192,17,0.1)', text:'الفرق بين الدين الذكي الذي يبني ثروة والدين الذي يسرقها — أين أنت الحين؟'},
+      {icon:'🗺️', bg:'rgba(245,166,35,0.1)', text:'تحتاج خارطة وفرة تبدأ من وضعك الحقيقي — مو من الوضع اللي تتمناه'}
+    ],
+    cta:'الخروج من الدائرة يبدأ بالتشخيص الصحيح',
+    ctaSub:'ستتعلم كيف تبني نظام مالي يوقف النزيف أولاً، ثم يبدأ يبني الوفرة الحقيقية'
+  },
+  stagnant: {
+    icon:'📊',
+    color: COLORS.blue,
+    tagBg: 'rgba(47,126,199,0.18)',
+    tagColor: '#3D8ED4',
+    ringStroke: COLORS.blue,
+    title:'الاستقرار بلا نمو',
+    desc:'وضعك مقبول ظاهرياً — لكن المال يتوقف بدل ما يتضاعف. أنت في المنطقة الأخطر: مرتاح بما يكفي لتأجيل التغيير.',
+    insights:[
+      {icon:'🪨', bg:'rgba(47,126,199,0.1)',  text:'الاستقرار الزائف — المال في الحساب ليس أصلاً، هو فرصة ضائعة إذا لم يعمل لصالحك'},
+      {icon:'🧭', bg:'rgba(123,45,139,0.1)',  text:'ما عندك هوية مالية واضحة — تتخذ قرارات بدون بوصلة تعيد إليها كل قرار'},
+      {icon:'📈', bg:'rgba(232,192,17,0.1)',  text:'الفرق بين الادخار الذي يحفظ المال والاستثمار الذي ينميه — أنت تفعل الأول فقط'},
+      {icon:'⚡', bg:'rgba(245,166,35,0.1)',  text:'جسم مالي صحي يحتاج: سيولة + أمان + نمو + خيارات — في أي عنصر أنت ضعيف؟'}
+    ],
+    cta:'حان وقت تحرك المال الواقف',
+    ctaSub:'ستخرج بخارطة وفرة شخصية وخطة نمو مبنية على شخصيتك ووضعك الحقيقي'
+  },
+  unstructured: {
+    icon:'🗺️',
+    color: COLORS.gold,
+    tagBg: 'rgba(232,192,17,0.18)',
+    tagColor: '#E8C011',
+    ringStroke: COLORS.gold,
+    title:'أصول بلا خطة',
+    desc:'عندك إمكانيات ومدخرات لكن بدون نظام — قرارات عشوائية تعيق الوصول لوفرتك الحقيقية. الخطوة التالية هي الأهم.',
+    insights:[
+      {icon:'🎲', bg:'rgba(232,192,17,0.1)', text:'الاستثمار العشوائي أخطر من عدم الاستثمار — بدون هوية استثمارية واضحة ستتكرر نفس الأخطاء'},
+      {icon:'🔢', bg:'rgba(47,126,199,0.1)', text:'ما عندك "معادلة وفرة" شخصية — كيف توزع دخلك بين النمو والأمان والمتعة والالتزامات؟'},
+      {icon:'💧', bg:'rgba(123,45,139,0.1)', text:'نزيف خفي من "الفرص الضائعة" — الفائض المالي لديك لا يعمل بكفاءته الحقيقية'},
+      {icon:'🏛️', bg:'rgba(245,166,35,0.1)',text:'تحتاج نظام كاش فلو يضمن أن كل دينار له وجهة ذكية — لا ادخار عشوائي'}
+    ],
+    cta:'النظام هو الفرق بين ثروة وتراكم عشوائي',
+    ctaSub:'ستبني نظاماً مالياً متكاملاً: هوية استثمارية + كاش فلو + معادلة وفرة شخصية'
+  }
+};
+
+/* ═══════════════════════════════════
+   SCORE LOGIC
+═══════════════════════════════════ */
+function getProfile() {
+  let score = 40;
+  const a1 = answers[1]||'', a3 = answers[3]||'', a4 = answers[4]||'';
+
+  if(a3.includes('٦ أشهر')) score+=20;
+  else if(a3.includes('٣ إلى')) score+=10;
+  else if(a3.includes('شهر إلى')) score+=5;
+
+  if(a4.includes('عشوائية')) score+=15;
+  else if(a4.includes('من أين أبدأ')) score+=5;
+
+  if(a1.includes('مقبول')) score+=10;
+  else if(a1.includes('أصول')) score+=15;
+
+  score = Math.min(score, 82);
+
+  let type;
+  if(a1.includes('راتبي عالي')) type='wealthy_illusion';
+  else if(a1.includes('أقساط'))   type='debt_loop';
+  else if(a1.includes('مقبول'))   type='stagnant';
+  else                             type='unstructured';
+
+  return {score, type};
+}
+
+/* ═══════════════════════════════════
+   CONFETTI
+═══════════════════════════════════ */
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const palette = [COLORS.gold, COLORS.orange, COLORS.blue, COLORS.purple, '#fff'];
+  for(let i=0;i<60;i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const size = 6+Math.random()*10;
+    const color = palette[Math.floor(Math.random()*palette.length)];
+    piece.style.cssText = `
+      width:${size}px;height:${size}px;
+      background:${color};
+      left:${Math.random()*100}%;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      animation-duration:${1.5+Math.random()*2}s;
+      animation-delay:${Math.random()*0.5}s;
+    `;
+    container.appendChild(piece);
+  }
+  setTimeout(()=>{ container.innerHTML=''; }, 3500);
+}
+
+/* ═══════════════════════════════════
+   RESULT COINS RAIN
+═══════════════════════════════════ */
+function spawnResultCoins() {
+  const c = document.getElementById('resultCoins');
+  c.innerHTML='';
+  const palette = [COLORS.gold, COLORS.orange, COLORS.blue, COLORS.purple];
+  for(let i=0;i<12;i++){
+    const coin = document.createElement('div');
+    coin.className='rcoin';
+    const size=20+Math.random()*40;
+    coin.style.cssText=`
+      width:${size}px;height:${size}px;
+      background:${palette[i%4]};
+      left:${Math.random()*100}%;
+      animation-duration:${3+Math.random()*4}s;
+      animation-delay:${Math.random()*3}s;
+    `;
+    c.appendChild(coin);
+  }
+}
+
+/* ═══════════════════════════════════
+   SHOW RESULT
+═══════════════════════════════════ */
+function showResult() {
+  if(!answers[5]) return;
+
+  document.getElementById('q5').classList.remove('active');
+  document.getElementById('progressWrap').style.display='none';
+
+  const {score, type} = getProfile();
+  const p = profiles[type];
+
+  document.getElementById('resultIcon').textContent = p.icon;
+
+  const tag = document.getElementById('resultTag');
+  tag.textContent = 'نتيجة تشخيصك المالي';
+  tag.style.background = p.tagBg;
+  tag.style.color = p.tagColor;
+  tag.style.border = `1px solid ${p.tagColor}44`;
+
+  document.getElementById('resultTitle').textContent = p.title;
+  document.getElementById('resultDesc').textContent  = p.desc;
+  document.getElementById('ctaHeadline').textContent = p.cta;
+  document.getElementById('ctaSub').textContent      = p.ctaSub;
+
+  // Score ring
+  const ring = document.getElementById('scoreRing');
+  ring.style.stroke = p.ringStroke;
+  const circumference = 2 * Math.PI * 35; // r=35
+  ring.style.strokeDasharray = circumference;
+  ring.style.strokeDashoffset = circumference;
+  setTimeout(()=>{
+    ring.style.strokeDashoffset = circumference - (score/100)*circumference;
+  }, 400);
+
+  // Animate score number
+  let current = 0;
+  const target = score;
+  const step = () => {
+    current = Math.min(current+2, target);
+    document.getElementById('scoreNum').textContent = toAr(current)+'٪';
+    if(current<target) requestAnimationFrame(step);
+  };
+  setTimeout(step, 800);
+
+  // Insights
+  const list = document.getElementById('insightsList');
+  list.innerHTML = p.insights.map(ins=>`
+    <div class="insight-item">
+      <div class="insight-bullet" style="background:${ins.bg}">${ins.icon}</div>
+      <div class="insight-text">${ins.text}</div>
+    </div>
+  `).join('');
+
+  spawnResultCoins();
+
+  document.getElementById('resultCard').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  setTimeout(launchConfetti, 600);
+}
+
+/* ═══════════════════════════════════
+   RESTART
+═══════════════════════════════════ */
+function restartQuiz() {
+  Object.keys(answers).forEach(k=>delete answers[k]);
+  document.querySelectorAll('.question-card').forEach(c=>c.classList.remove('active','exit'));
+  document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('ready'));
+  document.getElementById('resultCard').classList.remove('active');
+  document.getElementById('q1').classList.add('active');
+  document.getElementById('progressWrap').classList.remove('visible');
+  document.getElementById('progressWrap').style.display='';
+  for(let i=1;i<=5;i++){
+    const d=document.getElementById('dot'+i);
+    if(d) d.className='step-dot'+(i===1?' active':'');
+  }
+  document.getElementById('progressFill').style.width='0%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ═══════════════════════════════════
+   CTA HANDLER
+═══════════════════════════════════ */
+function handleCTA() {
+  // Replace with your actual booking URL
+  alert('📞 للتسجيل والحجز: 69954849\n\nسعر التسجيل المبكر: ٢٥٠ كد\nينتهي ٢٠ مايو');
+}
+</script>
+</body>
+</html>
